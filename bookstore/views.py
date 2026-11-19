@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Author, Book
+from .pagination import RoleBasedPageSizePagination
 from .permissions import IsEduDomainOrReadOnly
 from .serializers import AuthorSerializer, BookSerializer
 
@@ -30,6 +31,7 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsEduDomainOrReadOnly]
+    pagination_class = RoleBasedPageSizePagination
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["title", "author__name"]
     ordering_fields = ["price", "title"]
